@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import './index.css'
 
+const baseUrl = "/api/persons"
 
 import { create, deletePerson, updatePerson } from './services/Notes';
 
@@ -15,7 +16,7 @@ const App = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/persons')
+      .get(baseUrl)
       .then(response => {
         console.log('promise fulfilled')
         setPersons(response.data)
