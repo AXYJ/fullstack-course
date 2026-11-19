@@ -92,8 +92,21 @@ const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, persons, set
           }, 5000)
         })
         .catch(error => {
-          console.log(error);
+          if (error.response?.status === 400) {
+            // validation failed: show the server message, keep the person
+            setMessage(error.response.data.error)
+          } else {
+            // 404: the person no longer exists
+            setMessage(`Information of '${isNotUnique.name}' has already been removed from server`)
+            setPersons(persons.filter(p => p.id !== isNotUnique.id))
+          }
+          setMessageClass('error')
+          setTimeout(() => {
+            setMessage(null)
+            setMessageClass(null)
+          }, 5000)
         })
+
     } else {
       if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one ?`)) {
 
@@ -113,7 +126,7 @@ const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, persons, set
               setMessageClass(null)
             }, 5000)
 
-            
+
           })
       }
     }

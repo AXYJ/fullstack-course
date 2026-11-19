@@ -19,7 +19,7 @@ const Person = mongoose.model('Person', personSchema)
 
 mongoose
     .connect(url)
-    .then((result) => {
+    .then(() => {
         console.log('connected')
 
         if (!process.argv[3] || !process.argv[4]) {
@@ -34,7 +34,7 @@ mongoose
                 number: process.argv[4]
             })
 
-            console.log("added", person.name, "number", person.number, "to phonebook")
+            console.log('added', person.name, 'number', person.number, 'to phonebook')
             return person.save()
         }
     })
